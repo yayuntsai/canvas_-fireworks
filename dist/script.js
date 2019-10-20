@@ -11,19 +11,28 @@ var controls = {
 var gui = new dat.GUI()
 gui.add(controls,"value",-2,2).step(0.01).onChange(function(value){})
 
-
+//設定粒子初始值
 class Particle{
   constructor(args){
     let def = {
-      p: new Vec2(0,0),
-      v: new Vec2(0,0),
-      a: new Vec2(0,0),
+      p: new Vec2(),
+      v: new Vec2(),
+      a: new Vec2(),
       r: 10,
       color: "#fff"
     }
     //把初始值def跟args使用者參數做融合
     Object.assign(def,args) //擁有客製化版本
     Object.assign(this,def) //把客製化版本的初始值放到自己這物件上面
+  }
+  draw(){
+    ctx.save()
+    ctx.translate(this.p.x, this.p.y)
+    ctx.beginPath()
+    ctx.arc(0,0,this.r,0,Math.PI*2)
+    ctx.fillStyle = this.color
+    ctx.fill()
+    ctx.restore()
   }
 }
 
@@ -32,8 +41,8 @@ class Particle{
 
 class Vec2{
   constructor(x,y){
-    this.x = x
-    this.y = y
+    this.x = x || 0
+    this.y = y || 0 
   }
   set(x,y){
     this.x =x
@@ -99,11 +108,18 @@ function initCanvas(){
 }
 initCanvas()
 
+//裝粒子的陣列
+particles = []
 function init(){
   
 }
 function update(){
   time++
+  particles = particles.concat(Array.from({length:5},(d,i)=>{
+    return new Particle({
+      p: mousePos.clone()
+    })
+  }))
 }
 function draw(){
    //清空背景
@@ -113,6 +129,7 @@ function draw(){
   //-------------------------
   //   在這裡繪製
   
+  particles.forEach(p=>{p.draw()})
   
   
   //-----------------------
