@@ -6,17 +6,19 @@ var bgColor ="black"
 
 //控制
 var controls = {
-  value: 0
+  value: 0,
+  gcount: 13,
+  ay = 0.6
 }
 var gui = new dat.GUI()
-gui.add(controls,"value",-2,2).step(0.01).onChange(function(value){})
+gui.add(controls,"gcount",0,30).step(1).onChange(function(value){})
 
 //設定粒子初始值
 class Particle{
   constructor(args){
     let def = {
       p: new Vec2(),
-      v: new Vec2(),
+      v: new Vec2(1,0),
       a: new Vec2(),
       r: 10,
       color: "#fff"
@@ -33,6 +35,12 @@ class Particle{
     ctx.fillStyle = this.color
     ctx.fill()
     ctx.restore()
+  }
+  update(){
+    this.p = this.p.add(this.v)
+    //速度等於上一個的速度加現在的加速度
+    this.v = this.v.add(this.a)
+    this.v.move(0,controls.ay)
   }
 }
 
@@ -115,11 +123,12 @@ function init(){
 }
 function update(){
   time++
-  particles = particles.concat(Array.from({length:5},(d,i)=>{
+  particles = particles.concat(Array.from({length: controls.gcount},(d,i)=>{
     return new Particle({
       p: mousePos.clone()
     })
   }))
+  particles.forEach(p=>{p.update()})
 }
 function draw(){
    //清空背景
@@ -149,7 +158,7 @@ function draw(){
     ctx.line(new Vec2(0,-len),new Vec2(0,len))
     ctx.fillText(mousePos,10,-10)
     ctx.stroke()
-  ctx.restore()
+    ctx.restore()
   
   //schedule next render
 
