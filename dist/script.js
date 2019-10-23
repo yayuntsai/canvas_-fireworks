@@ -51,6 +51,9 @@ class Particle{
     if(this.p.y-this.r < 0 ){
       this.v.y = -Math.abs(this.v.y)
     }
+    if(this.p.x-this.r < 0 ){
+      this.v.x = -Math.abs(this.v.x)
+    }
   }
 }
 
