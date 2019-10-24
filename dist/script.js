@@ -41,6 +41,7 @@ class Particle{
     //速度等於上一個的速度加現在的加速度
     this.v = this.v.add(this.a)
     this.v.move(0,controls.ay)
+    this.v = this.v.mul(0.99)
 
     if(this.p.y+this.r > wy){
       this.v.y = -Math.abs(this.v.y)
