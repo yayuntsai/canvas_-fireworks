@@ -8,7 +8,8 @@ var bgColor ="black"
 var controls = {
   value: 0,
   gcount: 13,
-  ay = 0.6
+  ay = 0.6,
+  fade = 0.99
 }
 var gui = new dat.GUI()
 gui.add(controls,"gcount",0,30).step(1).onChange(function(value){})
@@ -41,7 +42,9 @@ class Particle{
     //速度等於上一個的速度加現在的加速度
     this.v = this.v.add(this.a)
     this.v.move(0,controls.ay)
+    //讓球的速度衰減
     this.v = this.v.mul(0.99)
+    this.r*= controls.fade
 
     if(this.p.y+this.r > wy){
       this.v.y = -Math.abs(this.v.y)
