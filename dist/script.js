@@ -142,7 +142,10 @@ function update(){
   time++
   particles = particles.concat(Array.from({length: controls.gcount},(d,i)=>{
     return new Particle({
-      p: mousePos.clone()
+      // 讓他的位置是滑鼠位置的clone
+      p: mousePos.clone(),
+      //設定速度為隨機，-5是為了讓方向往左一半
+      v: new Vec2(Math.random()*10-5,Math.random()*10-5)
     })
   }))
   particles.forEach(p=>{p.update()})
