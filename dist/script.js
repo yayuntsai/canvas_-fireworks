@@ -13,6 +13,8 @@ var controls = {
 }
 var gui = new dat.GUI()
 gui.add(controls,"gcount",0,30).step(1).onChange(function(value){})
+gui.add(controls,"ay",-1,1).step(0.01).onChange(function(value){})
+gui.add(controls,"fade",0,1).step(0.01).onChange(function(value){})
 
 //設定粒子初始值
 class Particle{
