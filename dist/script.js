@@ -175,7 +175,7 @@ function draw(){
   ctx.save()
   ctx.beginPath()
   ctx.translate(mousePos.x,mousePos.y)
-    ctx.strokeStyle="red"
+    ctx.strokeStyle="black"
     let len = 20
     ctx.line(new Vec2(-len,0),new Vec2(len,0))
     ctx.line(new Vec2(0,-len),new Vec2(0,len))
